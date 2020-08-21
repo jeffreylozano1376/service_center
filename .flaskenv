@@ -1,0 +1,1 @@
+FLASK_APP=service_center.py
