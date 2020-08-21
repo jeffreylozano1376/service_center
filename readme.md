@@ -29,4 +29,17 @@
     ```type nul > app/templates/index.html```
     ```type nul > app/templates/base.html```
 3. Write view functions in 'routes.py'</br>
-    
+
+## WEB FORMS
+1. Install Flask-WTF extension</br>
+    ```pip install flask-wtf```
+2. Set-up configuration options</br>
+    ```type nul > config.py```
+    - Define 'Config' class - store configuration variables
+    - Import class 'Config' at '__init__.py'
+3. Define web form classes in 'forms.py'</br>
+    ```type nul > app/forms.py```
+4. Add the necessary 'form tags' in HTML Templates</br>
+    ```type nul > app/templates/login.html```
+5. Define 'form' view functions in 'routes.py'</br>
+
