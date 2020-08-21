@@ -29,6 +29,4 @@
     ```type nul > app/templates/index.html```
     ```type nul > app/templates/base.html```
 3. Write view functions in 'routes.py'</br>
-
-TEAEESADSD
     
