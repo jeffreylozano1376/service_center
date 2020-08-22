@@ -72,6 +72,9 @@
     ```pip install email-validator```
 8. Define 'RegistrationForm' and create registration template, and registration view function
 
+## USER LOGINS
+1. Define 'User' template view function
+
 
 
 
