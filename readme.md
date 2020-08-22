@@ -61,16 +61,18 @@
     ```flask db upgrade```
 
 ## USER LOGINS
-1. Implement password hashing logic in the User Model as methods</br>
+1. Implement password hashing logic in the User Model (2 methods)</br>
 2. Install Flask-Login extension</br>
     ```pip install flask-login```
 3. Create 'login instance' in application</br>
-4. Inherit 'UserMixin' class for generic implementations </br>
+4. Inherit 'UserMixin' class for 'User' model </br>
 5. Configure a user loader function in 'User' class</br>
 6. Define the 'Login' & 'Logout' view functions</br>
 7. Install Email-Validator dependency</br>
     ```pip install email-validator```
-    
+8. Define 'RegistrationForm' and create registration template, and registration view function
+
+
 
 
 
