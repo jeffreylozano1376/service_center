@@ -36,10 +36,28 @@
 2. Set-up configuration options</br>
     ```type nul > config.py```
     - Define 'Config' class - store configuration variables
+    - ADD 'SECRET_KEY' config variable
     - Import class 'Config' at '__init__.py'
 3. Define web form classes in 'forms.py'</br>
     ```type nul > app/forms.py```
 4. Add the necessary 'form tags' in HTML Templates</br>
     ```type nul > app/templates/login.html```
 5. Define 'form' view functions in 'routes.py'</br>
+
+## DATABASES
+1. Install Flask-SQLAlchemy extension</br>
+    ```pip install flask-sqlalchemy```
+    - Add 'SQLALCHEMY_DATABASE_URI' config variable
+    - Add 'SQLALCHEMY_TRACK_MODIFICATIONS' config variable
+2. Install Flask-Migrate</br>
+    ```pip install flask-migrate```
+3. Create 'database instance' & 'database migration engine instance' in application
+4. Define Database Models in 'models.py'
+5. Create Migration Repository
+    ```flask db init```
+6. (First) Database Migration creates database / thereafter, generates migration scripts
+    ```flask db migrate```
+7. Apply the generated migration scripts
+    ```flask db upgrade```
+
 
