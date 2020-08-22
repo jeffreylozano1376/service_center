@@ -1,1 +1,2 @@
 FLASK_APP=service_center.py
+FLASK_DEBUG=1

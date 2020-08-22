@@ -1,8 +1,8 @@
 {% extends "base.html" %}
     
 {% block content %}
-    <h1>Hi, {{ user.username }}!</h1>
+    <h1>Hi, {{ current_user.username }}!</h1>
     {% for service_item in service_items %}
-    <div><p>"{{ service_item.receiving_staff.username }}" receives "{{ service_item.product_for_service.brand.title() }} {{ service_item.product_for_service.item_type }}" from "{{ service_item.customer }}"
+    <div><p>{{ service_item.author.username }} receives: <b>{{ service_item.item_model }}</b></p></div>
     {% endfor %}
 {% endblock %}

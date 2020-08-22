@@ -49,15 +49,30 @@
     ```pip install flask-sqlalchemy```
     - Add 'SQLALCHEMY_DATABASE_URI' config variable
     - Add 'SQLALCHEMY_TRACK_MODIFICATIONS' config variable
-2. Install Flask-Migrate</br>
+2. Install Flask-Migrate extension</br>
     ```pip install flask-migrate```
-3. Create 'database instance' & 'database migration engine instance' in application
-4. Define Database Models in 'models.py'
-5. Create Migration Repository
+3. Create 'database instance' & 'database migration engine instance' in application</br>
+4. Define Database Models in 'models.py'</br>
+5. Create Migration Repository</br>
     ```flask db init```
-6. (First) Database Migration creates database / thereafter, generates migration scripts
+6. (First) Database Migration creates database / thereafter, generates migration scripts</br>
     ```flask db migrate```
-7. Apply the generated migration scripts
+7. Apply the generated migration scripts</br>
     ```flask db upgrade```
+
+## USER LOGINS
+1. Implement password hashing logic in the User Model as methods</br>
+2. Install Flask-Login extension</br>
+    ```pip install flask-login```
+3. Create 'login instance' in application</br>
+4. Inherit 'UserMixin' class for generic implementations </br>
+5. Configure a user loader function in 'User' class</br>
+6. Define the 'Login' & 'Logout' view functions</br>
+7. Install Email-Validator dependency</br>
+    ```pip install email-validator```
+    
+
+
+
 
 
