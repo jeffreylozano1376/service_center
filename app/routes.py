@@ -1,28 +1,38 @@
+from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.models import User, Service_Item
 
-@app.route('/')
-@app.route('/index')
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
+
+@app.route('/', methods=['POST', 'GET'])
+@app.route('/index', methods=['POST', 'GET'])
 @login_required
 def index():
-    user = {'username': 'Jeffrey'}
-    service_items = [
-        {
-            'author': {'username': 'Anna'},
-            'customer': 'Mario Diving',
-            'product_for_service': {'item_type': 'compressor', 'brand': 'coltri'}
-        },
-        {
-            'author': {'username': 'Ruben'},
-            'customer': 'Mark Lapid',
-            'product_for_service': {'item_type': 'dive computer', 'brand': ' suunto'}
-        }
-    ]
-    return render_template('index.html', title='Home Page', service_items=service_items)
+    if request.method == 'POST':
+        si_customer = request.form['customer']
+        si_item = request.form['item']
+        si_item_type = request.form['item_type']
+        si_brand = request.form['brand']
+        si_serial_num = request.form['serial_num']
+        si_req_serv = request.form['req_serv']
+        new_entry = Service_Item(customer=si_customer, item=si_item, item_type=si_item_type, brand=si_brand, serial_num=si_serial_num, req_serv=si_req_serv)
+        try:
+            db.session.add(new_entry)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an issue adding your entry'
+    else:
+        contents = Service_Item.query.order_by(Service_Item.date_recvd).all()
+        return render_template('index.html', title='Home', contents=contents)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -61,12 +71,55 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-@app.route('/user/<username>')
+@app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    service_items = [
-        {'author': user, 'item_brand': 'SUUNTO', 'customer': 'mario diving'},
-        {'author': user, 'item_brand': 'AQUALUNG', 'customer': 'wen chu'}
-    ]
-    return render_template('user.html', user=user, service_items=service_items)
+    # service_items = [
+    #     {'author': user, 'body': 'Test post #1'},
+    #     {'author': user, 'body': 'Test post #2'}
+    # ]
+    if request.method == 'POST':
+        si_content = request.form['customer']
+        new_entry = Service_Item(customer=si_content)
+
+        try:
+            db.session.add(new_entry)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an issue adding your entry'
+
+    else:
+        entries = Service_Item.query.order_by(Service_Item.date_recvd).all()
+        return render_template('user.html', user=user, entries=entries)
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    item_to_delete = Service_Item.query.get_or_404(id)
+
+    try:
+        db.session.delete(item_to_delete)
+        db.session.commit()
+        return redirect('/')
+    except:
+        return 'There was a problem deleting that task'
+
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    item_to_update = Service_Item.query.get_or_404(id)
+
+    if request.method == 'POST':
+        iu_customer = request.form['customer']
+        iu_item = request.form['item']
+        iu_item_type = request.form['item_type']
+        iu_brand = request.form['brand']
+        iu_serial_num = request.form['serial_num']
+        iu_req_serv = request.form['req_serv']
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an issue updating your task'
+    else:
+        return render_template('update.html', item_to_update=item_to_update)

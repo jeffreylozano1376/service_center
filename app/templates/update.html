@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+    
+{% block head %}
+<title>AWDS Logbook</title>
+{% endblock %}
+
+{% block content %}
+    <form style="margin: 0; padding: 0;" action="/update/{{content.id}}" method="POST">
+        <p>Customer Name:&ensp;<input style="display: inline;" type="text" name="customer" id="customer"/></p>
+        <p>Item for Service:&ensp;<input style="display: inline;" type="text" name="item" id="item"/></p>
+        <p>Item Type:&ensp;<input style="display: inline;" type="text" name="item_type" id="item_type"/></p>
+        <p>Brand:&ensp;<input style="display: inline;" type="text" name="brand" id="brand"/></p>
+        <p>Serial Number:&ensp;<input style="display: inline;" type="text" name="serial_num" id="serial_num"/></p>
+        <p>Service Requested:&ensp;<input style="display: inline;" type="text" name="req_serv" id="req_serv"/></p>
+        <hr>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock %}

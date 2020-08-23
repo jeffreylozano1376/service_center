@@ -1,8 +1,64 @@
 {% extends "base.html" %}
     
+{% block head %}
+<title>AWDS Logbook</title>
+{% endblock %}
+
 {% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {% for service_item in service_items %}
-    <div><p>{{ service_item.author.username }} receives: <b>{{ service_item.item_model }}</b></p></div>
-    {% endfor %}
+<div class="content">
+    <h1 style="text-align: center">AWDS Logbook</h1>
+    {% if contents|length < 1 %}
+    <h4 style="text-align: center">There are no tasks. Create one below!</h4>
+    {% else %}
+    <table border=1 class="center" width="100%">
+        <col style="width:10%">
+	    <col style="width:10%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <tbody>
+        <tr style="text-align:center">
+            <th>Control #</th>
+            <th>Customer Name</th>
+            <th>Item for Service</th>
+            <th>Item Type</th>
+            <th>Brand</th>
+            <th>Serial #</th>
+            <th>Req. Service</th>
+            <!-- <th>Date Received</th> -->
+        </tr>
+        {% for content in contents %}
+        <tr style="text-align:center">
+            <td>{{ content.id }}</td>
+            <td>{{ content.customer }}</td>
+            <td>{{ content.item }}</td>
+            <td>{{ content.item_type }}</td>
+            <td>{{ content.brand }}</td>
+            <td>{{ content.serial_num }}</td>
+            <td>{{ content.req_serv }}</td>
+            <!-- <td>{{ content.date_recvd.date }}</td> -->
+            <td>
+                <a href="/delete/{{ content.id }}">Delete</a>
+                <!-- <br>
+                <a href="/update/{{ content.id }}">Update</a> -->
+            </td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <hr>
+    <form style="margin: 0; padding: 0;" action="/" method="POST">
+        <p>Customer Name:&ensp;<input style="display: inline;" type="text" name="customer" id="customer"/></p>
+        <p>Item for Service:&ensp;<input style="display: inline;" type="text" name="item" id="item"/></p>
+        <p>Item Type:&ensp;<input style="display: inline;" type="text" name="item_type" id="item_type"/></p>
+        <p>Brand:&ensp;<input style="display: inline;" type="text" name="brand" id="brand"/></p>
+        <p>Serial Number:&ensp;<input style="display: inline;" type="text" name="serial_num" id="serial_num"/></p>
+        <p>Service Requested:&ensp;<input style="display: inline;" type="text" name="req_serv" id="req_serv"/></p>
+        <hr>
+        <input type="submit" value="Submit">
+    </form>
+</div>
 {% endblock %}

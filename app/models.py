@@ -26,12 +26,17 @@ class User(UserMixin, db.Model):
 class Service_Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer = db.Column(db.String(64), index=True)
-    item_brand = db.Column(db.String(64), index=True)
-    item_model = db.Column(db.String(64), index=True)
+    item = db.Column(db.String(64), index=True)
+    item_type = db.Column(db.String(64), index=True)
+    brand = db.Column(db.String(64), index=True)
     serial_num = db.Column(db.Integer, index=True)
     req_serv = db.Column(db.String(64), index=True)
-    date_recvd = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    date_recvd = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return f'<Service_Item {self.customer} {self.item_brand} {self.item_model}>'
+        return f'<Service_Item {self.customer} {self.item} {self.item_type} {self.brand} {self.serial_num} {self.req_serv} {self.date_recvd}>'
+
+    @login.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
